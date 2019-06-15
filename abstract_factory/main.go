@@ -16,7 +16,7 @@ type chair struct {
 	sku   string
 }
 
-// factory
+// abstract function
 func modernChair() Chair {
 	return &chair{
 		kind:  "modern",
@@ -71,16 +71,18 @@ func (c *classic) CreateChair() Chair {
 	return classicChair()
 }
 
+// client method
+func ClientChair(f FurnitureFactory) Chair {
+	return f.CreateChair()
+}
+
 func main() {
-	// chair
-	modern := newModernFurnitureFactory()
-	modernChair := modern.CreateChair()
+	modernChair := ClientChair(newModernFurnitureFactory())
 
 	fmt.Println(modernChair.printSku())
 	fmt.Println(modernChair.printPrice())
 
-	classic := newClassicFurnitureFactory()
-	classicChair := classic.CreateChair()
+	classicChair := ClientChair(newClassicFurnitureFactory())
 
 	fmt.Println(classicChair.printSku())
 	fmt.Println(classicChair.printPrice())
